@@ -1,0 +1,26 @@
+.
+├── README.md
+├── docker-compose.yml
+├── docker
+│   └── Dockerfile
+├── requirements.txt
+├── app
+│   ├── __init__.py
+│   ├── main.py
+│   ├── core
+│   │   ├── logger
+│   │   │   ├── __init__.py
+│   │   │   └── config.py
+│   │   └── settings
+│   │       ├── __init__.py
+│   │       └── environments.py
+│   ├── infrastructure
+│   │   └── api
+│   │       └── v1
+│   │           └── routers
+│   │               ├── __init__.py
+│   │               └── testing.py
+│   └── utils
+│       ├── __init__.py
+│       ├── utils.py
+│       └── utils_datatime.py
