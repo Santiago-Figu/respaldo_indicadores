@@ -7,34 +7,34 @@ services:
     ports:
       - "8011:8011"
     volumes:
-      - ./:/app
+      - ./app:/app/app
+      - ./data:/app/data
     env_file:
       - ./docker/prod/.env
     command: >
-      sh -c "uvicorn app.main:app --host 0.0.0.0 --port 8011 --reload --reload-dir /app/app"
+      sh -c "uvicorn app.main:app --host 0.0.0.0 --port 8011"
     restart: unless-stopped
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "3"
+    networks:
+      - app-network
 
-  fastapi-devel:
-    image: fastapi-devel
+  fastapi-preprod:
+    image: fastapi-preprod
     build:
       context: .
       dockerfile: ./docker/Dockerfile
     ports:
       - "8010:8010"
     volumes:
-      - ./:/app
+      - ./app:/app/app
+      - ./data:/app/data
     env_file:
-      - ./docker/devel/.env
+      - ./docker/preprod/.env
     command: >
       sh -c "uvicorn app.main:app --host 0.0.0.0 --port 8010 --reload --reload-dir /app/app"
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "3"
     restart: unless-stopped
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
