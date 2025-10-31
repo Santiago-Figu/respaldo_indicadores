@@ -1,6 +1,6 @@
 services:
   fastapi-prod:
-    image: fastapi-prod
+    image: fastapi-custom
     build:
       context: .
       dockerfile: ./docker/Dockerfile
@@ -8,7 +8,6 @@ services:
       - "8011:8011"
     volumes:
       - ./app:/app/app
-      - ./data:/app/data
     env_file:
       - ./docker/prod/.env
     command: >
@@ -18,7 +17,7 @@ services:
       - app-network
 
   fastapi-preprod:
-    image: fastapi-preprod
+    image: fastapi-custom
     build:
       context: .
       dockerfile: ./docker/Dockerfile
@@ -26,7 +25,6 @@ services:
       - "8010:8010"
     volumes:
       - ./app:/app/app
-      - ./data:/app/data
     env_file:
       - ./docker/preprod/.env
     command: >

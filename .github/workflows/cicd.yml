@@ -1,0 +1,39 @@
+name: Deploy with Docker Compose
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy on Self-Hosted Runner
+    runs-on: 
+      - self-hosted
+      - linux
+      - docker
+      - deploy
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Stop previous containers
+        run: |
+          docker compose down
+      
+      - name: Clean workspace
+        run: |
+          docker system prune -a -f
+      
+      - name: Docker build images
+        run: |
+          docker compose build
+
+      - name: Docker up all services
+        run: |
+          docker compose up -d
+
+      - name: Clean workspace after process
+        run: |
+          docker system prune -a -f
